@@ -3,11 +3,13 @@ const express = require("express");
 const { upload } = require("../middlewares/fileUpload");
 const { UNEXPECTED_FILE_TYPE } = require("../constants/file");
 const { fileController } = require("../controllers/fileController");
+const resizeImage = require("../middlewares/imageResize");
+const isFilePresent = require("../middlewares/validators/isFilePresent");
 
 const router = express.Router();
 
 // http://localhost:3000/folders/:folderId/files --upload a file
-router.post("/", function (req, res, next) {
+router.post("/", isFilePresent, resizeImage, function (req, res, next) {
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             if (err.code === UNEXPECTED_FILE_TYPE.code) {
