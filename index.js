@@ -5,6 +5,7 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const router = require("./src/routes");
+const { sequelize, Sequelize } = require("./models");
 
 const app = express();
 
@@ -33,6 +34,20 @@ app.get("/", (req, res) => {
 
 ///routes -------------------------------
 app.use("/", router);
+
+///connect to database with sequelize
+
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log("Connection has been established successfully.");
+        sequelize.sync({ force: false }).then(() => {
+            console.log("Database Synced");
+        });
+    })
+    .catch((err) => {
+        console.error("Unable to connect to the database:", err);
+    });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

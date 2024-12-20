@@ -1,32 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const fileRouter = require("./fileRouter");
+const {
+    createFolder,
+    updateFolder,
+    deleteFolder,
+    getFolder,
+    getAllFolders,
+} = require("../controllers/folderController");
 
 //http://localhost:3000/folder/create
-router.post("/create", (req, res) => {
-    res.send("Folder created successfully");
-});
+router.post("/create", createFolder);
 
 //http://localhost:3000/folders/:folderId -update
-router.put("/:folderId", (req, res) => {
-    res.send("Folder updated successfully");
-});
+router.put("/:folderId", updateFolder);
 
 //http://localhost:3000/folders/:folderId -delete
 
-router.delete("/:folderId", (req, res) => {
-    res.send("Folder deleted successfully");
-});
+router.delete("/:folderId", deleteFolder);
 
 //http://localhost:3000/folders/:folderId -get
-router.get("/:folderId", (req, res) => {
-    res.send("Folder retrieved successfully");
-});
+router.get("/:folderId", getFolder);
 
-//http://localhost:3000/folders -get
-router.get("/", (req, res) => {
-    res.send("Folders retrieved successfully"); //get all folders
-});
+//http://localhost:3000/folders -get all
+router.get("/", getAllFolders);
 
 //connect to fileRouter
 router.use("/:folderId/files", fileRouter);

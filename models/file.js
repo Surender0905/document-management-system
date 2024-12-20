@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             folderId: {
                 type: DataTypes.UUID,
                 references: {
-                    model: Folder,
+                    model: "Folder",
                     key: "folderId",
                 },
                 onDelete: "CASCADE",
